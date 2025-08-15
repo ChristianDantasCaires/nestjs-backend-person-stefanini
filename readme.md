@@ -152,8 +152,8 @@ O projeto mantém **80%+ de cobertura** de código conforme especificado.
 
 ```
 src/
-├── app.module.ts                # Módulo principal da aplicação
-├── main.ts                      # Bootstrap e Swagger
+├── app.module.ts
+├── main.ts
 ├── infra/
 │   ├── database/
 │   │   ├── sqlite.module.ts
@@ -171,7 +171,7 @@ src/
 │   │   ├── auth.module.ts
 │   │   ├── auth.controller.ts
 │   │   ├── auth.service.ts
-│   │   └── dtos/                 # DTOs de autenticação
+│   │   └── dtos/
 │   ├── users/
 │   │   ├── users.module.ts
 │   │   ├── users.controller.ts
@@ -188,7 +188,11 @@ src/
 │           ├── find-all-persons.service.ts
 │           ├── find-one-person.service.ts
 │           ├── update-person.service.ts
-│           └── delete-person.service.ts
+│           ├── delete-person.service.ts
+│           └── tests/                       # testes dos serviços
+│               ├── create-person.service.spec.ts
+│               ├── update-person.service.spec.ts
+│               └── ...                     # outros specs
 ├── shared/
 │   ├── enums/
 │   │   └── error-messages.enum.ts
@@ -205,7 +209,7 @@ src/
 │   └── utils/
 │       └── sanitizeCpf.utils.ts
 db/
-├── sql.sqlite                    # banco local (SQLite)
+├── sql.sqlite
 
 test/
 ├── app.e2e-spec.ts
@@ -215,5 +219,5 @@ outros arquivos na raiz:
 - .env
 - package.json
 - tsconfig.json
-
+- README.md
 ```
