@@ -65,15 +65,8 @@ Todas as rotas (exceto login) requerem autenticação via Bearer Token.
 #### Usuários Pré-cadastrados
 ```json
 {
-  "username": "admin",
-  "password": "admin123"
-}
-```
-
-```json
-{
-  "username": "teste", 
-  "password": "teste123"
+ "email": "usuario1@gmail.com",
+ "password": "12345"   
 }
 ```
 
