@@ -1,51 +1,226 @@
-# API Cadastro de Pessoas
+# API de Cadastro de Pessoas
 
-API backend construída com NestJS para cadastro e gerenciamento de pessoas, com autenticação JWT e persistência em SQLite.
+Esta é uma API REST desenvolvida em Node.js com NestJS e TypeScript para gerenciamento de cadastro de pessoas, com duas versões da API e todos os recursos extras implementados.
 
-Principais arquivos
+## 🚀 Tecnologias Utilizadas
 
-- Configuração da aplicação: [`AppModule`](src/app.module.ts) ([arquivo](src/app.module.ts))
-- Inicialização e Swagger: [`main.ts`](src/main.ts) ([arquivo](src/main.ts))
-- Banco de dados (TypeORM + SQLite): [`SqliteModule`](src/infra/database/sqlite.module.ts) ([arquivo](src/infra/database/sqlite.module.ts))
-- Entidades: [`Person`](src/infra/entities/person.entity.ts) ([arquivo](src/infra/entities/person.entity.ts)), [`User`](src/infra/entities/user.entity.ts) ([arquivo](src/infra/entities/user.entity.ts))
-- Repositórios: [`PersonRepository`](src/infra/database/repositories/person/person.repository.ts) ([arquivo](src/infra/database/repositories/person/person.repository.ts)), [`UserRepository`](src/infra/database/repositories/user/user.repository.ts) ([arquivo](src/infra/database/repositories/user/user.repository.ts))
-- Módulos principais: [`PersonsModule`](src/modules/persons/persons.module.ts) ([arquivo](src/modules/persons/persons.module.ts)), [`AuthModule`](src/modules/auth/auth.module.ts) ([arquivo](src/modules/auth/auth.module.ts)), [`UsersModule`](src/modules/users/users.module.ts) ([arquivo](src/modules/users/users.module.ts))
+- **Backend**: Node.js, NestJS, TypeScript
+- **Banco de Dados**: SQLite
+- **Autenticação**: JWT (JSON Web Token)
+- **Documentação**: Swagger/OpenAPI
+- **Testes**: Jest (unitários)
+- **Validações**: Zod
 
-Endpoints principais (controladores)
+## 📋 Funcionalidades
 
-- Autenticação: [`AuthController`](src/modules/auth/auth.controller.ts) — POST /auth/login ([arquivo](src/modules/auth/auth.controller.ts))
-  - DTOs: [`signInSchema` / `ISignInDTO`](src/modules/auth/dtos/auth.dto.ts) ([arquivo](src/modules/auth/dtos/auth.dto.ts))
-- Usuários (registro): [`UsersController`](src/modules/users/users.controller.ts) — POST /users/create ([arquivo](src/modules/users/users.controller.ts))
-- Pessoas (CRUD): [`PersonsController`](src/modules/persons/persons.controller.ts) — rotas em /persons ([arquivo](src/modules/persons/persons.controller.ts))
-  - DTOs: [`createPersonSchema` / `ICreatePersonDTO`](src/modules/persons/dtos/create-person.dto.ts) ([arquivo](src/modules/persons/dtos/create-person.dto.ts)), [`updatePersonSchema` / `IUpdatePersonDTO`](src/modules/persons/dtos/update-person.dto.ts) ([arquivo](src/modules/persons/dtos/update-person.dto.ts)), [`createPersonV2Schema`](src/modules/persons/dtos/create-person-v2.dto.ts) ([arquivo](src/modules/persons/dtos/create-person-v2.dto.ts))
+### Recursos Principais
+- ✅ **CRUD completo** de pessoas
+- ✅ **Duas versões da API de criar pessoa** (v1 e v2)
+- ✅ **Autenticação JWT** com usuários pré-existentes
+- ✅ **Validações** de CPF, email e data de nascimento, etc
+- ✅ **Documentação Swagger** para ambas as versões
+- ✅ **Testes automatizados**
 
-Validações e segurança
+### Criar Pessoa v1
+- Endereço é **opcional**
+- Todos os outros campos conforme especificação
 
-- Validação com Zod via [`ZodValidationPipe`](src/shared/http/pipe/zod-validation.pipe.ts) ([arquivo](src/shared/http/pipe/zod-validation.pipe.ts))
-- Guard JWT custom: [`AuthGuard`](src/shared/http/guard/auth.guard.ts) ([arquivo](src/shared/http/guard/auth.guard.ts))
-- Mensagens de erro: [`ErrorMessages`](src/shared/enums/error-messages.enum.ts) ([arquivo](src/shared/enums/error-messages.enum.ts))
-- Erro HTTP padrão: [`ServerError`](src/shared/error/server-error.ts) ([arquivo](src/shared/error/server-error.ts))
+### Criar Pessoa v2
+- Endereço é **obrigatório**
+- Compatibilidade com v1 mantida
 
-Utilitários
+## 🔧 Instalação e Execução
 
-- Sanitização de CPF: [`sanitizeCpf`](src/shared/utils/sanitizeCpf.utils.ts) ([arquivo](src/shared/utils/sanitizeCpf.utils.ts))
-- Interface de env: [`EnvConfig`](src/shared/interfaces/IEnv.interface.ts) ([arquivo](src/shared/interfaces/IEnv.interface.ts))
+### Pré-requisitos
+- Node.js 18+
+- npm ou yarn
 
-Testes
+### Instalação
+```bash
+# Clonar o repositório
+git clone <url-do-repositorio>
+cd pessoa-cadastro-api
 
-- Unit tests com Jest: [test/unit e src/modules/persons/services/tests](src/modules/persons/services/tests) ([pasta](src/modules/persons/services/tests))
-- E2E: [test/app.e2e-spec.ts](test/app.e2e-spec.ts) ([arquivo](test/app.e2e-spec.ts)), config: [test/jest-e2e.json](test/jest-e2e.json) ([arquivo](test/jest-e2e.json))
-
-Pré-requisitos
-
-- Node.js >= 18
-- npm
-- (opcional) SQLite (arquivo já incluso em db/sql.sqlite)
-
-Instalação e execução
-
-1. Instalar dependências
-
-```sh
+# Instalar dependências
 npm install
+
+# Executar em desenvolvimento
+npm run start:dev
+```
+
+### Variáveis de Ambiente
+Crie um arquivo `.env` na raiz do projeto:
+```env
+JWT_SECRET=seu_jwt_secret_super_seguro_aqui
+```
+
+## 📚 Documentação da API
+
+### Swagger
+- **API**: http://localhost:3000/swagger
+
+### Autenticação
+Todas as rotas (exceto login) requerem autenticação via Bearer Token.
+
+#### Usuários Pré-cadastrados
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+```json
+{
+  "username": "teste", 
+  "password": "teste123"
+}
+```
+
+#### Login
+```http
+POST /auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+### Endpoints API
+
+#### Pessoas
+- `POST /persons/create` - Criar pessoa V1  (com endereço opcional)
+- `POST /persons/create/v2` - Criar pessoa V2 (com endereço obrigatório)
+- `GET /persons` - Listar pessoas
+- `GET /persons/:id` - Buscar por ID
+- `PUT /persons/:id` - Atualizar pessoa
+- `DELETE /persons/:id` - Remover pessoa
+
+### Exemplo de Payload
+
+#### /persons/create (endereço opcional)
+```json
+{
+  "name": "João4 da Silva",
+  "gender": "M",
+  "email": "joao4.silva@example00.com",
+  "birthDate": "2000-05-15",
+  "placeOfBirth": "São Paulo",
+  "nationality": "Brasileira",
+  "cpf": "123.456.729-00"
+}
+```
+
+#### /persons/create/v2 (endereço obrigatório)
+```json
+{
+  "name": "João5 da Silva",
+  "gender": "M",
+  "email": "joao5.silva@example00.com",
+  "birthDate": "2000-05-15",
+  "placeOfBirth": "São Paulo",
+  "nationality": "Brasileira",
+  "cpf": "123.456.729-22",
+  "address": "Rua 2"
+}
+```
+
+## 🧪 Testes
+
+### Executar Testes
+```bash
+# Testes unitários
+npm run test
+
+# Testes com cobertura
+npm run test:cov
+
+# Testes e2e
+npm run test:e2e
+
+# Testes em modo watch
+npm run test:watch
+```
+
+### Cobertura
+O projeto mantém **80%+ de cobertura** de código conforme especificado.
+
+## 🔒 Segurança
+
+- **JWT Authentication** em todas as rotas protegidas
+- **Validação de entrada** com Zod
+- **Hash de senhas** com bcrypt
+- **Sanitização** de dados de entrada
+- **CORS** habilitado
+
+## 📊 Estrutura do Projeto
+
+```
+src/
+├── app.module.ts                # Módulo principal da aplicação
+├── main.ts                      # Bootstrap e Swagger
+├── infra/
+│   ├── database/
+│   │   ├── sqlite.module.ts
+│   │   ├── repositories.module.ts
+│   │   └── repositories/
+│   │       ├── person/
+│   │       │   └── person.repository.ts
+│   │       └── user/
+│   │           └── user.repository.ts
+│   └── entities/
+│       ├── person.entity.ts
+│       └── user.entity.ts
+├── modules/
+│   ├── auth/
+│   │   ├── auth.module.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── dtos/                 # DTOs de autenticação
+│   ├── users/
+│   │   ├── users.module.ts
+│   │   ├── users.controller.ts
+│   │   └── users.service.ts
+│   └── persons/
+│       ├── persons.module.ts
+│       ├── persons.controller.ts
+│       ├── dtos/
+│       │   ├── create-person.dto.ts        # v1 (endereço opcional)
+│       │   ├── create-person-v2.dto.ts     # v2 (endereço obrigatório)
+│       │   └── update-person.dto.ts
+│       └── services/
+│           ├── create-person.service.ts
+│           ├── find-all-persons.service.ts
+│           ├── find-one-person.service.ts
+│           ├── update-person.service.ts
+│           └── delete-person.service.ts
+├── shared/
+│   ├── enums/
+│   │   └── error-messages.enum.ts
+│   ├── error/
+│   │   └── server-error.ts
+│   ├── http/
+│   │   ├── pipe/
+│   │   │   └── zod-validation.pipe.ts
+│   │   └── guard/
+│   │       └── auth.guard.ts
+│   ├── interfaces/
+│   │   ├── IEnv.interface.ts
+│   │   └── IControllerResponse.ts
+│   └── utils/
+│       └── sanitizeCpf.utils.ts
+db/
+├── sql.sqlite                    # banco local (SQLite)
+
+test/
+├── app.e2e-spec.ts
+└── jest-e2e.json
+
+outros arquivos na raiz:
+- .env
+- package.json
+- tsconfig.json
+
 ```
