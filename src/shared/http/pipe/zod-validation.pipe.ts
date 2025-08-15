@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable, PipeTransform } from "@nestjs/common";
 import { ZodError } from "zod";
 import z from "zod";
-import ServerError from "../error/server-error";
-import { ErrorMessages } from "../enums/error-messages.enum";
+import ServerError from "../../error/server-error";
+import { ErrorMessages } from "../../enums/error-messages.enum";
 
 @Injectable()
 export class ZodValidationPipe implements PipeTransform {

@@ -1,11 +1,12 @@
-import { Body, Controller, Get, Param, Post, UsePipes } from '@nestjs/common';
-import CreatePersonService from '../services/create-person.service';
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from '@nestjs/common';
+import CreatePersonService from './services/create-person.service';
 import IControllerResponse from 'src/shared/interfaces/IControllerResponse';
-import { ZodValidationPipe } from 'src/shared/http/zod-validation.pipe';
-import { createPersonSchema } from '../dtos/create-person.dto';
-import type { ICreatePersonDTO } from '../dtos/create-person.dto';
-import FindAllPersonsService from '../services/find-all-persons.service';
-import FindOnePersonsService from '../services/find-one-person.service';
+import { ZodValidationPipe } from 'src/shared/http/pipe/zod-validation.pipe';
+import { createPersonSchema } from './dtos/create-person.dto';
+import type { ICreatePersonDTO } from './dtos/create-person.dto';
+import FindAllPersonsService from './services/find-all-persons.service';
+import FindOnePersonsService from './services/find-one-person.service';
+import { AuthGuard } from 'src/shared/http/guard/auth.guard';
 
 @Controller('persons')
 export class PersonsController {
@@ -22,6 +23,7 @@ export class PersonsController {
     return { data: result, success: true, message: '' }
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAllPersons(): Promise<IControllerResponse> {
     const result = await this.findAllPersonsService.execute();
