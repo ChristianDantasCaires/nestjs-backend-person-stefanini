@@ -1,4 +1,4 @@
-import FindAllPersonsService from "./find-all-persons.service";
+import FindAllPersonsService from "../find-all-persons.service";
 import { IPersonRepository } from "src/infra/database/repositories/person/person.repository.interface";
 import { Person, personGenderEnum } from "src/infra/entities/person.entity";
 

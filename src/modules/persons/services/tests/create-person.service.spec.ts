@@ -1,5 +1,5 @@
 import { HttpStatus } from "@nestjs/common";
-import CreatePersonService from "./create-person.service";
+import CreatePersonService from "../create-person.service";
 import { ErrorMessages } from "src/shared/enums/error-messages.enum";
 import ServerError from "src/shared/error/server-error";
 import { Person, personGenderEnum } from "src/infra/entities/person.entity";
@@ -25,6 +25,8 @@ describe("CreatePersonService", () => {
       findByEmail: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
+      delete: jest.fn(),
+      update: jest.fn(),
     };
 
     service = new CreatePersonService(personRepository);

@@ -3,7 +3,7 @@ import { IPersonRepository } from "src/infra/database/repositories/person/person
 import { Person, personGenderEnum } from "src/infra/entities/person.entity";
 import { ErrorMessages } from "src/shared/enums/error-messages.enum";
 import ServerError from "src/shared/error/server-error";
-import FindOnePersonsService from "./find-one-person.service";
+import FindOnePersonsService from "../find-one-person.service";
 
 describe("FindOnePersonsService", () => {
   let service: FindOnePersonsService;

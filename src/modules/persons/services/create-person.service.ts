@@ -9,7 +9,6 @@ import { Person } from "src/infra/entities/person.entity";
 export default class CreatePersonService {
   constructor(
     private readonly personRepository: IPersonRepository,
-
   ) { }
 
   public async execute(data: ICreatePersonDTO): Promise<Person> {

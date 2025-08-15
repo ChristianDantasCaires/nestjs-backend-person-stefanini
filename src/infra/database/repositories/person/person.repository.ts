@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from 'src/infra/entities/person.entity';
 import { IPersonRepository } from './person.repository.interface';
@@ -32,5 +32,13 @@ export class PersonRepository implements IPersonRepository {
 
   async findById(id: string): Promise<Person | null> {
     return this.repository.findOne({ where: { id } });
+  }
+
+  async update(person: Person): Promise<Person> {
+    return this.repository.save(person);
+  }
+
+  async delete(person: Person): Promise<DeleteResult> {
+    return this.repository.delete(person);
   }
 }
