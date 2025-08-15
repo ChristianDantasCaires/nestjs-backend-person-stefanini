@@ -19,6 +19,8 @@ describe("UpdatePersonService", () => {
     gender: personGenderEnum.MALE,
     nationality: "Brazilian",
     placeOfBirth: "São Paulo",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   const updateData: IUpdatePersonDTO = {

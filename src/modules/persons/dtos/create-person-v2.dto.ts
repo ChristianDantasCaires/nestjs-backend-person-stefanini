@@ -1,7 +1,7 @@
 import { personGenderEnum } from 'src/infra/entities/person.entity';
 import { z } from 'zod';
 
-export const createPersonSchema = z.object({
+export const createPersonV2Schema = z.object({
   name: z.string().nonempty("Nome é obrigatório"),
   gender: z
     .enum([personGenderEnum.MALE, personGenderEnum.FEMALE])
@@ -13,8 +13,8 @@ export const createPersonSchema = z.object({
   nationality: z.string().optional(),
   cpf: z.string()
     .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "CPF inválido no formato XXX.XXX.XXX-XX"),
-  address: z.string().optional(),
+  address: z.string()
 }).strict();
 
-export type ICreatePersonDTO = z.infer<typeof createPersonSchema>;
+export type ICreatePersonV2DTO = z.infer<typeof createPersonV2Schema>;
 

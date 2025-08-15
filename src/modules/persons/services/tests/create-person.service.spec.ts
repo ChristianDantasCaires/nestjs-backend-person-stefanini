@@ -16,6 +16,8 @@ describe("CreatePersonService", () => {
     name: "John Doe",
     birthDate: new Date("1990-01-01"),
     gender: personGenderEnum.MALE,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   beforeEach(() => {
